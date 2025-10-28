@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+/* Removed non-standard @theme at-rule (was causing VSCode 'unknownAtRules' diagnostic).
+   If you relied on this for a build tool, consider replacing it with a class or
+   moving its variables into :root or a `.theme-inline` class. */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Print styles for invoice A4 */
+@page {
+  size: A4;
+  margin: 10mm;
+}
+
+@media print {
+  /* remove chrome default margins */
+  html, body {
+    height: auto;
+    background: #fff;
+  }
+  .no-print { display: none !important; }
+  .invoice-a4 { box-shadow: none !important; border-radius: 0 !important; }
+  /* ensure the invoice container uses full page width when printing */
+  .invoice-a4 { width: auto !important; padding: 10mm !important; }
+}
+
+/* Improved A4 print layout rules */
+@media print {
+  /* match A4 width and center the invoice on the page */
+  .invoice-a4 {
+    width: 210mm !important;
+    max-width: 210mm !important;
+    margin: 0 auto !important;
+    padding: 12mm !important;
+    box-sizing: border-box !important;
+    font-size: 12pt !important;
+    color: #000 !important;
+    background: #fff !important;
+  }
+
+  /* Tables should use full width and be printable */
+  .invoice-a4 table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    table-layout: fixed !important;
+  }
+
+  .invoice-a4 th, .invoice-a4 td {
+    padding: 6px 8px !important;
+    border: 1px solid #ddd !important;
+    word-break: break-word !important;
+    vertical-align: middle !important;
+  }
+
+  .invoice-a4 thead { display: table-header-group !important; }
+  .invoice-a4 tfoot { display: table-footer-group !important; }
+
+  /* Avoid breaking a table row across pages */
+  .invoice-a4 tr { page-break-inside: avoid !important; }
+
+  /* Adjust heading sizes for print */
+  .invoice-a4 h1 { font-size: 20pt !important; margin: 0 0 6px 0 !important; }
+  .invoice-a4 .text-base { font-size: 11pt !important; }
+
+  /* Tighten overall spacing */
+  .invoice-a4 .text-sm { font-size: 10pt !important; }
+}
+
+

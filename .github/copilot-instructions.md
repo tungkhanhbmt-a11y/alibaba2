@@ -1,0 +1,4 @@
+- [x] Scaffolded Next.js project with TypeScript, Tailwind CSS, ESLint, App Router, and src/ structure using npm.
+- [ ] Customize project: Tích hợp Google Sheets API để ghi/lấy dữ liệu đơn hàng.
+- [ ] Tạo giao diện nhập đơn hàng và hiển thị danh sách đơn hàng.
+- [ ] Đảm bảo README.md mô tả cách sử dụng và cấu hình Google API.

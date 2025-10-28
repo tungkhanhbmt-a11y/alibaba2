@@ -5,7 +5,7 @@ import InvoicePrintToolbar from '../../../components/InvoicePrintToolbar';
 
 type Item = { name: string; unit: string; quantity: string | number; price: string; total: string; note?: string };
 
-export default async function InvoiceDetail({ params }: { params: { id: string } }) {
+export default async function InvoiceDetail({ params, searchParams }: { params: { id: string }, searchParams?: { [key: string]: string | string[] | undefined } }) {
   // params can be a Promise in some Next.js setups — await to be safe
   const resolvedParams: any = await params;
   const invoiceId = resolvedParams?.id || params?.id;
@@ -49,8 +49,18 @@ export default async function InvoiceDetail({ params }: { params: { id: string }
     return d;
   };
 
+  const screenshotMode = Boolean(searchParams && (searchParams.screenshot === '1' || searchParams.raw === '1' || searchParams.print === '1'));
+
   return (
-    <div className="p-4">
+    <div className="p-0" style={screenshotMode ? { background: '#fff', padding: 0 } : undefined}>
+      {screenshotMode ? (
+        <style>{`
+          /* Screenshot mode: hide app chrome and center invoice for clean capture */
+          header, nav, .no-print, .site-header, .sm\:hidden { display: none !important; }
+          html, body { margin: 0 !important; padding: 0 !important; background: #fff !important; }
+          .invoice-a4 { margin: 8mm auto !important; box-shadow: none !important; width: 210mm !important; max-width: 210mm !important; padding: 12mm !important; }
+        `}</style>
+      ) : null}
       <div className="max-w-[210mm] mx-auto">
         <div className="mb-4 no-print flex items-center justify-center gap-3">
           <InvoicePrintToolbar />
